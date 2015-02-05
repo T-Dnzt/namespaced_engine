@@ -1,6 +1,8 @@
 # ModularEngine
 
-TODO: Write a gem description
+Engine generator heavily inspired from the official Plugin generator. It can be used to generate Modular Rails Engines with 2 level of namespace. 
+
+Created for Modular Rails (https://modularity.samurais.com).
 
 ## Installation
 
@@ -18,7 +20,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+To generate a new modular engine, run the following command from a Ruby on Rails application:
+
+    $ rails generate modular:engine path/to/my_engine --namespace='my_namespace'
 
 ## Contributing
 
