@@ -1,6 +1,6 @@
 #/lib/modular_engine_generator/engine.rb
 require 'rails'
-module ModularEngineGenerator
+module ModularEngine
   class Engine < Rails::Engine
   end
 end

@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'modular_engine_generator/version'
+require 'modular_engine/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "modular_engine_generator"
-  spec.version       = ModularEngineGenerator::VERSION
+  spec.name          = "modular_engine"
+  spec.version       = ModularEngine::VERSION
   spec.authors       = ["Thibault"]
   spec.email         = ["thibault@appyhotel.com"]
   spec.summary       = %q{TODO: Write a short summary. Required.}

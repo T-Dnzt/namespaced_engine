@@ -1,0 +1,8 @@
+Description:
+    The 'rails modular_engine new' command creates a skeleton for developing an extendable modular engine.
+
+Example:
+    rails modular_engine new ~/Code/Ruby/my_app/engines/blog 'Namespace1/Namespace2'
+
+    This generates a skeletal Rails engine in ~/Code/Ruby/my_app/engines/blog.
+    See the README in the newly created engine to get going.
