@@ -220,7 +220,6 @@ module Modular
     end
 
     def engine_loader
-      p options[:namespace].camelize.gsub('::', '/') + "/#{modules.join('_').downcase}"
       @engine_loader ||= modules.join('_').downcase
     end
 
