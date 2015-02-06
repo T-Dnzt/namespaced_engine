@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["thibault@appyhotel.com"]
   spec.summary       = 'Generate modular Rails engines.'
   spec.description   = 'This gem will generate modular engines as shown in the book Modular Rails at http://modularity.samurails.com.'
-  spec.homepage      = "http://modularity.samurails.com"
+  spec.homepage      = "https://github.com/T-Dnzt/Modular-Engine"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
