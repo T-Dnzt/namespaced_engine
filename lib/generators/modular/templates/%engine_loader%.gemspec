@@ -5,7 +5,7 @@ require "<%= namespaced_name %>/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "<%= name %>"
+  s.name        = "<%= engine_loader %>"
   s.version     = <%= camelized_modules %>::VERSION
   s.authors     = ["<%= author %>"]
   s.email       = ["<%= email %>"]
@@ -20,8 +20,4 @@ Gem::Specification.new do |s|
 <% end -%>
 
   <%= '# ' if options.dev? || options.edge? -%>s.add_dependency "rails", "~> <%= Rails::VERSION::STRING %>"
-<% unless options[:skip_active_record] -%>
-
-  s.add_development_dependency "<%= gem_for_database %>"
-<% end -%>
 end

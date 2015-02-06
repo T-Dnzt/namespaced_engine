@@ -15,6 +15,11 @@ module Modular
     def app
       directory 'app'
       empty_directory_with_keep_file "app/assets/images/#{namespaced_name}"
+      empty_directory "app/overrides"
+      empty_directory_with_keep_file "app/overrides/controllers"
+      empty_directory_with_keep_file "app/overrides/models"
+      empty_directory_with_keep_file "app/views/#{namespaced_name}/overrides"
+
     end
 
     def readme
@@ -30,7 +35,7 @@ module Modular
     end
 
     def gemspec
-      template "%name%.gemspec"
+      template "%engine_loader%.gemspec"
     end
 
     def gitignore
