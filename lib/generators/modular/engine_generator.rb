@@ -15,7 +15,6 @@ module Modular
     def app
       directory 'app'
       empty_directory_with_keep_file "app/assets/images/#{namespaced_name}"
-      directory "app/views/%namespaced_name%"
     end
 
     def readme
