@@ -232,6 +232,14 @@ module Modular
       end
     end
 
+    def wrap_in_modules_with_new_lines(content)
+      modules.reverse.inject(content) do |content, mod|
+        str = "module #{mod}\n"
+        str += content.lines.map { |line| "  #{line}" }.join
+        str += content.present? ? "\nend" : "end"
+      end
+    end
+
     def camelized_modules
       @camelized_modules ||= namespaced_name.camelize
     end
