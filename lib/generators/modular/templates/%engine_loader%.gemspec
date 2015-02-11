@@ -20,4 +20,6 @@ Gem::Specification.new do |s|
 <% end -%>
 
   <%= '# ' if options.dev? || options.edge? -%>s.add_dependency "rails", "~> <%= Rails::VERSION::STRING %>"
+
+  s.add_dependency "deface"
 end

@@ -15,9 +15,10 @@ module Modular
     def app
       directory 'app'
       empty_directory_with_keep_file "app/assets/images/#{namespaced_name}"
-      empty_directory "app/overrides"
-      empty_directory_with_keep_file "app/overrides/controllers"
-      empty_directory_with_keep_file "app/overrides/models"
+      empty_directory "app/decorators"
+      empty_directory_with_keep_file "app/decorators/controllers"
+      empty_directory_with_keep_file "app/decorators/models"
+      empty_directory_with_keep_file "app/overrides"
       empty_directory_with_keep_file "app/views/#{namespaced_name}/overrides"
 
     end
