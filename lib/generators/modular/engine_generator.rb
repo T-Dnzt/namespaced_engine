@@ -196,7 +196,7 @@ module Modular
     end
 
     def namespaced_name
-      @namespaced_name ||= modules.join('/').downcase#name.gsub('-', '/')
+      @namespaced_name ||= modules.join('/').underscore#name.gsub('-', '/')
     end
 
   protected
@@ -226,7 +226,7 @@ module Modular
     end
 
     def engine_loader
-      @engine_loader ||= modules.join('_').downcase
+      @engine_loader ||= modules.join('_').underscore
     end
 
     def wrap_in_modules(content)
