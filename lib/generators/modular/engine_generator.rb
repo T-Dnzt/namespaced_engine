@@ -1,8 +1,6 @@
-#lib/generators/modular_engine_generator/install_generator.rb
 require 'rails/generators'
 require 'active_support/core_ext/hash/slice'
 require "rails/generators/rails/app/app_generator"
-#require "rails/generators/app_base"
 require 'date'
 
 module Modular
@@ -58,10 +56,10 @@ module Modular
     def test
       template "test/test_helper.rb"
       template "test/%namespaced_name%_test.rb"
-      append_file "Rakefile", <<-EOF
-  #{rakefile_test_tasks}
-
-  task default: :test
+      append_file "Rakefile", <<-EOF.gsub(/^\s+\|/, '')
+        |  #{rakefile_test_tasks}
+        |
+        |  task default: :test
       EOF
       if engine?
         template "test/integration/navigation_test.rb"
@@ -115,13 +113,13 @@ module Modular
     alias_method :app_path, :engine_path
 
     class_option :namespace,    type: :string, default: '',
-                                desc: 'Add one or more namespace to your modular engine. Ex: namespace1::namespace2'                      
+                                desc: 'Add one or more namespace to your modular engine. Ex: namespace1::namespace2'
 
     def initialize(*args)
       super
 
       unless engine_path
-        raise Error, "Engine name should be provided in arguments. For details run: rails g modular:engine --help"
+        raise Error, 'Engine name should be provided in arguments. For details run: rails g modular:engine --help'
       end
     end
 
@@ -196,7 +194,7 @@ module Modular
     end
 
     def namespaced_name
-      @namespaced_name ||= modules.join('/').downcase#name.gsub('-', '/')
+      @namespaced_name ||= modules.join('/').underscore#name.gsub('-', '/')
     end
 
   protected
@@ -226,7 +224,7 @@ module Modular
     end
 
     def engine_loader
-      @engine_loader ||= modules.join('_').downcase
+      @engine_loader ||= modules.join('_').underscore
     end
 
     def wrap_in_modules(content)
@@ -285,8 +283,8 @@ module Modular
         raise Rails::Generators::Error, "Invalid engine name #{original_name}. Please give a name which does not start with numbers."
       elsif Rails::Generators::RESERVED_NAMES.include?(name)
         raise Rails::Generators::Error, "Invalid engine name #{original_name}. Please give a name which does not match one of the reserved rails words."
-      elsif Object.const_defined?(camelized)
-        raise Rails::Generators::Error, "Invalid engine name #{original_name}, constant #{camelized} is already in use. Please choose another plugin name."
+      elsif Object.const_defined?(modules.first)
+        raise Rails::Generators::Error, "Constant #{modules.first} is already used in Ruby. Please choose another namespace"
       end
     end
 
@@ -314,7 +312,6 @@ module Modular
     def rakefile_test_tasks
       ''
     end
-
   end
 
 end
