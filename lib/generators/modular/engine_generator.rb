@@ -57,9 +57,9 @@ module Modular
       template "test/test_helper.rb"
       template "test/%namespaced_name%_test.rb"
       append_file "Rakefile", <<-EOF.gsub(/^\s+\|/, '')
-        |  #{rakefile_test_tasks}
+        |#{rakefile_test_tasks}
         |
-        |  task default: :test
+        |task default: :test
       EOF
       if engine?
         template "test/integration/navigation_test.rb"
@@ -309,6 +309,7 @@ module Modular
       app_path.sub(/^#{rails_app_path}\//, '')
     end
 
+    #TODO remove from project or finish it
     def rakefile_test_tasks
       ''
     end
