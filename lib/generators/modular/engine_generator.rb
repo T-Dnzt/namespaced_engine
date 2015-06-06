@@ -284,7 +284,7 @@ module Modular
       elsif Rails::Generators::RESERVED_NAMES.include?(name)
         raise Rails::Generators::Error, "Invalid engine name #{original_name}. Please give a name which does not match one of the reserved rails words."
       elsif Object.const_defined?(modules.first)
-        raise Rails::Generators::Error, "Constant #{modules.first} is already used in Ruby. Please choose another namespace"
+        warn "[WARNING]: Constant #{modules.first} is already defined. Please choose another namespace."
       end
     end
 
