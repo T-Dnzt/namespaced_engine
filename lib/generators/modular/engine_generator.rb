@@ -6,6 +6,15 @@ require 'date'
 module Modular
 
   class EngineBuilder
+    
+    if Rails.version < "4.0.0" && Rails.version > "3.2.0"
+
+      def empty_directory_with_keep_file *args
+        empty_directory_with_gitkeep *args
+      end
+      
+    end
+
     def rakefile
       template "Rakefile"
     end
