@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "modular_engine"
   spec.version       = ModularEngine::VERSION
   spec.authors       = ["Thibault"]
-  spec.email         = ["thibault@appyhotel.com"]
+  spec.email         = ["thibault@devblast.com"]
   spec.summary       = 'Generate modular Rails engines.'
   spec.description   = 'This gem will generate modular engines as shown in the book Modular Rails at http://modularity.samurails.com.'
   spec.homepage      = "https://github.com/T-Dnzt/Modular-Engine"
