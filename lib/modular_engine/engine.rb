@@ -1,4 +1,4 @@
-#/lib/modular_engine_generator/engine.rb
+# /lib/modular_engine_generator/engine.rb
 require 'rails'
 module ModularEngine
   class Engine < Rails::Engine

@@ -1,4 +1,4 @@
-require "modular_engine/version"
+require 'modular_engine/version'
 
 module ModularEngine
   require 'modular_engine/engine' if defined?(Rails)

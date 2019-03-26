@@ -1,36 +1,37 @@
 require 'rails/generators'
 require 'active_support/core_ext/hash/slice'
-require "rails/generators/rails/app/app_generator"
+require 'rails/generators/rails/app/app_generator'
 require 'date'
 require_relative 'engine_builder'
 
 module Modular
   class EngineGenerator < ::Rails::Generators::AppBase
-    source_root File.expand_path("templates", __dir__)
-    RESERVED_NAMES = %w[application destroy plugin runner test]
+    source_root File.expand_path('templates', __dir__)
+    RESERVED_NAMES = %w[application destroy plugin runner test].freeze
 
-    add_shared_options_for "plugin"
+    add_shared_options_for 'plugin'
 
-    alias_method :engine_path, :app_path
+    alias engine_path app_path
 
-    class_option :dummy_path,   type: :string, default: "test/dummy",
-                                desc: "Create dummy application at given path"
+    class_option :namespace,    type: :string, default: nil
+    class_option :dummy_path,   type: :string, default: 'test/dummy',
+                                desc: 'Create dummy application at given path'
 
     class_option :full,         type: :boolean, default: false,
-                                desc: "Generate a rails engine with bundled Rails application for testing"
+                                desc: 'Generate a rails engine with bundled Rails application for testing'
 
     class_option :mountable,    type: :boolean, default: false,
-                                desc: "Generate mountable isolated application"
+                                desc: 'Generate mountable isolated application'
 
     class_option :skip_gemspec, type: :boolean, default: false,
-                                desc: "Skip gemspec file"
+                                desc: 'Skip gemspec file'
 
     class_option :skip_gemfile_entry, type: :boolean, default: false,
                                       desc: "If creating plugin in application's directory " \
-                                                "skip adding entry to Gemfile"
+                                                'skip adding entry to Gemfile'
 
     class_option :api,          type: :boolean, default: false,
-                                desc: "Generate a smaller stack for API application plugins"
+                                desc: 'Generate a smaller stack for API application plugins'
 
     def initialize(*args)
       @dummy_path = nil
@@ -43,7 +44,7 @@ module Modular
     def create_root_files
       build(:readme)
       build(:rakefile)
-      build(:gemspec)   unless options[:skip_gemspec]
+      build(:gemspec) unless options[:skip_gemspec]
       build(:license)
       build(:gitignore) unless options[:skip_git]
       build(:gemfile)   unless options[:skip_gemfile]
@@ -83,6 +84,7 @@ module Modular
 
     def create_test_dummy_files
       return unless with_dummy_app?
+
       create_dummy_app
     end
 
@@ -98,11 +100,21 @@ module Modular
 
     def run_after_bundle_callbacks
       unless @after_bundle_callbacks.empty?
-        ActiveSupport::Deprecation.warn("`after_bundle` is deprecated and will be removed in the next version of Rails. ")
+        ActiveSupport::Deprecation.warn('`after_bundle` is deprecated and will be removed in the next version of Rails. ')
       end
 
-      @after_bundle_callbacks.each do |callback|
-        callback.call
+      @after_bundle_callbacks.each(&:call)
+    end
+
+    def global_name
+      options[:namespace] ||= begin
+        # same as ActiveSupport::Inflector#underscore except not replacing '-'
+        underscored = options[:namespace].dup
+        underscored.gsub!(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
+        underscored.gsub!(/([a-z\d])([A-Z])/, '\1_\2')
+        underscored.downcase!
+
+        underscored
       end
     end
 
@@ -123,10 +135,10 @@ module Modular
     end
 
     def namespaced_name
-      @namespaced_name ||= name.tr("-", "/")
+      @namespaced_name ||= "#{global_name}/#{name.tr('-', '/')}"
     end
 
-  private
+    private
 
     def create_dummy_app(path = nil)
       dummy_path(path) if path
@@ -160,7 +172,7 @@ module Modular
     end
 
     def with_dummy_app?
-      options[:skip_test].blank? || options[:dummy_path] != "test/dummy"
+      options[:skip_test].blank? || options[:dummy_path] != 'test/dummy'
     end
 
     def api?
@@ -176,15 +188,15 @@ module Modular
     end
 
     def modules
-      @modules ||= namespaced_name.camelize.split("::")
+      @modules ||= namespaced_name.camelize.split('::')
     end
 
     def wrap_in_modules(unwrapped_code)
-      unwrapped_code = "#{unwrapped_code}".strip.gsub(/\s$\n/, "")
+      unwrapped_code = unwrapped_code.to_s.strip.gsub(/\s$\n/, '')
       modules.reverse.inject(unwrapped_code) do |content, mod|
         str = "module #{mod}\n"
         str += content.lines.map { |line| "  #{line}" }.join
-        str += content.present? ? "\nend" : "end"
+        str += content.present? ? "\nend" : 'end'
       end
     end
 
@@ -197,25 +209,33 @@ module Modular
     end
 
     def camelized
-      @camelized ||= name.gsub(/\W/, "_").squeeze("_").camelize
+      @camelized ||= name.gsub(/\W/, '_').squeeze('_').camelize
     end
 
     def author
-      default = "TODO: Write your name"
-      if skip_git?
-        @author = default
-      else
-        @author = `git config user.name`.chomp rescue default
-      end
+      default = 'TODO: Write your name'
+      @author = if skip_git?
+                  default
+                else
+                  begin
+                    `git config user.name`.chomp
+                  rescue StandardError
+                    default
+                  end
+                end
     end
 
     def email
-      default = "TODO: Write your email address"
-      if skip_git?
-        @email = default
-      else
-        @email = `git config user.email`.chomp rescue default
-      end
+      default = 'TODO: Write your email address'
+      @email = if skip_git?
+                 default
+               else
+                 begin
+                   `git config user.email`.chomp
+                 rescue StandardError
+                   default
+                 end
+               end
     end
 
     def valid_const?
@@ -227,8 +247,8 @@ module Modular
         raise Error, "Invalid plugin name #{original_name}. Please give a name which does not start with numbers."
       elsif RESERVED_NAMES.include?(name)
         raise Error, "Invalid plugin name #{original_name}. Please give a " \
-                      "name which does not match one of the reserved rails " \
-                      "words: #{RESERVED_NAMES.join(", ")}"
+                      'name which does not match one of the reserved rails ' \
+                      "words: #{RESERVED_NAMES.join(', ')}"
       elsif Object.const_defined?(camelized)
         raise Error, "Invalid plugin name #{original_name}, constant #{camelized} is already in use. Please choose another plugin name."
       end
@@ -236,7 +256,6 @@ module Modular
 
     def application_definition
       @application_definition ||= begin
-
         dummy_application_path = File.expand_path("#{dummy_path}/config/application.rb", destination_root)
         unless options[:pretend] || !File.exist?(dummy_application_path)
           contents = File.read(dummy_application_path)
@@ -244,7 +263,7 @@ module Modular
         end
       end
     end
-    alias :store_application_definition! :application_definition
+    alias store_application_definition! application_definition
 
     def get_builder_class
       EngineBuilder
@@ -272,7 +291,7 @@ end
     end
 
     def rails_app_path
-      APP_PATH.sub("/config/application", "") if defined?(APP_PATH)
+      APP_PATH.sub('/config/application', '') if defined?(APP_PATH)
     end
 
     def inside_application?
@@ -281,7 +300,8 @@ end
 
     def relative_path
       return unless inside_application?
-      app_path.sub(/^#{rails_app_path}\//, "")
+
+      app_path.sub(%r{^#{rails_app_path}/}, '')
     end
   end
 end
