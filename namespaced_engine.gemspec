@@ -1,14 +1,14 @@
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'modular_engine/version'
+require 'namespaced_engine/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'modular_engine'
-  spec.version       = ModularEngine::VERSION
+  spec.name          = 'namespaced_engine'
+  spec.version       = NamespacedEngine::VERSION
   spec.authors       = ['Thibault']
   spec.email         = ['thibault@devblast.com']
-  spec.summary       = 'Generate modular Rails engines.'
-  spec.description   = 'This gem will generate modular engines as shown in the book Modular Rails at http://modularity.samurails.com.'
+  spec.summary       = 'Generates namespaced engines.'
+  spec.description   = 'This gem will generate namespaced engines as shown in the Modular Rails book (https://devblast.com/c/modular-rails).'
   spec.homepage      = 'https://github.com/T-Dnzt/Modular-Engine'
   spec.license       = 'MIT'
 

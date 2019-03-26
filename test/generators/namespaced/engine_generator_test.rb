@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require_relative File.expand_path('../../../lib/generators/modular/engine_generator', __dir__)
+require_relative File.expand_path('../../../lib/generators/namespaced/engine_generator', __dir__)
 
-class Modular::EngineGeneratorTest < ::Rails::Generators::TestCase
+class Namespaced::EngineGeneratorTest < ::Rails::Generators::TestCase
   include Minitest::Hooks
 
-  tests Modular::EngineGenerator
+  tests Namespaced::EngineGenerator
   destination File.expand_path('../tmp', File.dirname(__FILE__))
 
   before(:all) do

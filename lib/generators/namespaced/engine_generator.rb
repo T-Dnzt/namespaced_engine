@@ -4,7 +4,7 @@ require 'rails/generators/rails/app/app_generator'
 require 'date'
 require_relative 'engine_builder'
 
-module Modular
+module Namespaced
   class EngineGenerator < ::Rails::Generators::AppBase
     source_root File.expand_path('templates', __dir__)
     RESERVED_NAMES = %w[application destroy plugin runner test].freeze

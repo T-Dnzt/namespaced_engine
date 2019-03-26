@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Modular
+module Namespaced
   class EngineBuilder
     def rakefile
       template 'Rakefile'
