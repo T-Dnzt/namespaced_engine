@@ -228,14 +228,14 @@ module Namespaced
     def email
       default = 'TODO: Write your email address'
       @email = if skip_git?
-                 default
-               else
-                 begin
-                   `git config user.email`.chomp
-                 rescue StandardError
-                   default
-                 end
-               end
+                default
+              else
+                begin
+                  `git config user.email`.chomp
+                rescue StandardError
+                  default
+                end
+              end
     end
 
     def valid_const?

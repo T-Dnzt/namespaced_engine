@@ -3,10 +3,10 @@
 require 'test_helper'
 require_relative File.expand_path('../../../lib/generators/namespaced/engine_generator', __dir__)
 
-class Namespaced::EngineGeneratorTest < ::Rails::Generators::TestCase
+class Generators::NamespacedEngine::EngineGeneratorTest < ::Rails::Generators::TestCase
   include Minitest::Hooks
 
-  tests Namespaced::EngineGenerator
+  tests Generators::NamespacedEngine::EngineGenerator
   destination File.expand_path('../tmp', File.dirname(__FILE__))
 
   before(:all) do

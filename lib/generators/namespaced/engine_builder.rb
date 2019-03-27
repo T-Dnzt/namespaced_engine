@@ -93,7 +93,7 @@ task default: :test
       opts[:dummy_app] = true
 
       invoke Rails::Generators::AppGenerator,
-             [File.expand_path(dummy_path, destination_root)], opts
+            [File.expand_path(dummy_path, destination_root)], opts
     end
 
     def test_dummy_config
@@ -140,7 +140,7 @@ task default: :test
 
       if mountable?
         template 'rails/javascripts.js',
-                 "app/assets/javascripts/#{namespaced_name}/application.js"
+                "app/assets/javascripts/#{namespaced_name}/application.js"
       elsif full?
         empty_directory_with_keep_file "app/assets/javascripts/#{namespaced_name}"
       end
